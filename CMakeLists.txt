@@ -29,6 +29,7 @@ Engine/WindowHandler/Window.cpp
 Engine/Pipeline/Pipeline.cpp
 first_app.cpp
 Engine/EngineDevice/EngineDevice.cpp
+Engine/SwapChain/SwapChain.cpp
 )
 
 add_dependencies(VulkanApp RunCompileScript)
