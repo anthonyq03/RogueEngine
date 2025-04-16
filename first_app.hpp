@@ -4,6 +4,7 @@
 #include "Engine/Pipeline/Pipeline.hpp"
 #include "Engine/EngineDevice/EngineDevice.hpp"
 #include "Engine/SwapChain/SwapChain.hpp"
+#include "Engine/Model/Model.hpp"
 
 //std
 #include <memory>
@@ -13,8 +14,8 @@ namespace Engine{
     class FirstApp
     {
         public:
-            static constexpr int WIDTH = 800;
-            static constexpr int HEIGHT = 600;
+            static constexpr int WIDTH = 1600;
+            static constexpr int HEIGHT = 1200;
 
             FirstApp();
             ~FirstApp();
@@ -24,10 +25,19 @@ namespace Engine{
 
             void run();
         private:
+            void loadAnimatingTriangle(int depth);
+            void loadModels();
             void createPipelineLayout();
             void createPipeline();
             void createCommandBuffers();
             void drawFrame();
+
+            static void generateSierpinskiTriangle(
+                std::vector<Model::Vertex>& vertices,
+                Model::Vertex a,
+                Model::Vertex b,
+                Model::Vertex c,
+                int depth);
 
             Window window{WIDTH, HEIGHT, "First App"};
             EngineDevice engineDevice{window};
@@ -37,5 +47,13 @@ namespace Engine{
 
             VkPipelineLayout pipelineLayout;
             std::vector<VkCommandBuffer> commandBuffers;
+            std::unique_ptr<Model> model;
+
+
+
+            //For triangle shit
+            int currentDepth = 0;
+            int maxDepth = 7; // Or whatever
+            float lastUpdateTime = 0.0f;
         };
 }

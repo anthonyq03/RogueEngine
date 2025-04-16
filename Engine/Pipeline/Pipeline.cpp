@@ -1,5 +1,7 @@
 #include "Pipeline.hpp"
 
+#include "../Model/Model.hpp"
+
 //std
 #include <fstream>
 #include <iostream>
@@ -64,13 +66,16 @@ namespace Engine
         ShaderStages[1].pNext = nullptr;
         ShaderStages[1].pSpecializationInfo = nullptr;
 
+        auto bindingDescription = Model::Vertex::getBindingDescriptions();
+        auto attributeDescriptions = Model::Vertex::getAttributeDescriptions();
+
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
 
         vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
-        vertexInputInfo.vertexBindingDescriptionCount = 0; // Optional
-        vertexInputInfo.vertexAttributeDescriptionCount = 0; // Optional
-        vertexInputInfo.pVertexAttributeDescriptions = 0; // Optional
-        vertexInputInfo.pVertexBindingDescriptions = 0; // Optional
+        vertexInputInfo.vertexBindingDescriptionCount = static_cast<uint32_t>(bindingDescription.size()); // Optional
+        vertexInputInfo.vertexAttributeDescriptionCount = static_cast<uint32_t>(attributeDescriptions.size()); // Optional
+        vertexInputInfo.pVertexAttributeDescriptions = attributeDescriptions.data(); // Optional
+        vertexInputInfo.pVertexBindingDescriptions = bindingDescription.data(); // Optional
 
         VkPipelineViewportStateCreateInfo viewportInfo{};
         viewportInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO;
@@ -118,9 +123,13 @@ namespace Engine
         }
     };
 
-    PipelineConfigInfo Pipeline::defaultPipelineConfigInfo(uint32_t width, uint32_t height)
+    void Pipeline::bind(VkCommandBuffer commandBuffer)
     {
-        PipelineConfigInfo configInfo{};
+        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+    }
+
+    void Pipeline::defaultPipelineConfigInfo(PipelineConfigInfo &configInfo, uint32_t width, uint32_t height)
+    {
         configInfo.inputAssemblyInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
         configInfo.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
         configInfo.inputAssemblyInfo.primitiveRestartEnable = VK_FALSE;
@@ -188,7 +197,5 @@ namespace Engine
         configInfo.depthStencilInfo.stencilTestEnable = VK_FALSE;
         configInfo.depthStencilInfo.front = {};  // Optional
         configInfo.depthStencilInfo.back = {};   // Optional
-
-        return configInfo;
     }
 } // namespace Engine

@@ -9,6 +9,11 @@ namespace Engine
 {
     struct PipelineConfigInfo
     {
+        //makes it non copyable
+        PipelineConfigInfo() = default;
+        PipelineConfigInfo(const PipelineConfigInfo&) = delete;
+        PipelineConfigInfo& operator=(const PipelineConfigInfo&) = delete;
+
         VkViewport viewport;
         VkRect2D scissor;
         
@@ -33,7 +38,9 @@ namespace Engine
         Pipeline(const Pipeline &) = delete;
         void operator=(const Pipeline &) = delete;
 
-        static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);
+        void bind(VkCommandBuffer commandBuffer);
+
+        static void defaultPipelineConfigInfo(PipelineConfigInfo& config, uint32_t width, uint32_t height);
 
 
     private:
@@ -47,5 +54,6 @@ namespace Engine
         VkPipeline graphicsPipeline;
         VkShaderModule vertShaderModule;
         VkShaderModule fragShaderModule;
+        PipelineConfigInfo configInfo;
     };
 } // namespace Engine
