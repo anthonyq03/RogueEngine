@@ -53,7 +53,7 @@ namespace Engine{
 
             //For triangle shit
             int currentDepth = 0;
-            int maxDepth = 7; // Or whatever
+            int maxDepth = 8; // Or whatever
             float lastUpdateTime = 0.0f;
         };
 }

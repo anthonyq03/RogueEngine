@@ -28,7 +28,10 @@ namespace Engine
         {
             glfwPollEvents();
             float currentTime = glfwGetTime();
-            if (currentTime - lastUpdateTime >= 1.0f && currentDepth <= maxDepth) {
+            if (currentTime - lastUpdateTime >= 1.0f) {
+                if(currentDepth > maxDepth){
+                    currentDepth = 0;
+                }
                 vkDeviceWaitIdle(engineDevice.device());     // ensure GPU is idle
                 loadAnimatingTriangle(currentDepth);                    // recreate model + buffer
                 createCommandBuffers();                      // re-record with new buffer
@@ -50,9 +53,9 @@ namespace Engine
         {
 
             
-            Model::Vertex midAB = Model::Vertex{(a.position + b.position) / 2.0f};
-            Model::Vertex midBC = Model::Vertex{(b.position + c.position) / 2.0f};
-            Model::Vertex midCA = Model::Vertex{(c.position + a.position) / 2.0f};
+            Model::Vertex midAB = Model::Vertex{(a.position + b.position) / 2.0f,(a.color + b.color) / 2.0f};
+            Model::Vertex midBC = Model::Vertex{(b.position + c.position) / 2.0f, (b.color + c.color) / 2.0f};
+            Model::Vertex midCA = Model::Vertex{(c.position + a.position) / 2.0f, (c.color + a.color) / 2.0f};
             if (depth > 0) {
                 generateSierpinskiTriangle(vertices, a, midAB, midCA, depth - 1);
                 generateSierpinskiTriangle(vertices, b, midAB, midBC, depth - 1);
@@ -77,9 +80,9 @@ namespace Engine
     
         generateSierpinskiTriangle(
             vertices,
-            Model::Vertex{glm::vec2{0.0f, -1.0f}},
-            Model::Vertex{glm::vec2{-1.0f, 1.0f}},
-            Model::Vertex{glm::vec2{1.0f, 1.0f}},
+            Model::Vertex{glm::vec2{0.0f, -1.0f},{1.0f, 0.0f, 0.0f}},
+            Model::Vertex{glm::vec2{-1.0f, 1.0f}, {0.0f, 1.0f, 0.0f}},
+            Model::Vertex{glm::vec2{1.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
             depth
         );
     
