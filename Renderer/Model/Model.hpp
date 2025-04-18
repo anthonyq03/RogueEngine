@@ -9,7 +9,7 @@
 
 #include <vector>
 
-namespace Engine
+namespace Renderer
 {
 
     class Model{

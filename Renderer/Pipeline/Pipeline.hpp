@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace Engine
+namespace Renderer
 {
     struct PipelineConfigInfo
     {

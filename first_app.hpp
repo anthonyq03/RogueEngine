@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Engine/WindowHandler/window.hpp"
-#include "Engine/Pipeline/Pipeline.hpp"
-#include "Engine/EngineDevice/EngineDevice.hpp"
-#include "Engine/SwapChain/SwapChain.hpp"
-#include "Engine/Model/Model.hpp"
+#include "Renderer/WindowHandler/window.hpp"
+#include "Renderer/Pipeline/Pipeline.hpp"
+#include "Renderer/EngineDevice/EngineDevice.hpp"
+#include "Renderer/SwapChain/SwapChain.hpp"
+#include "Renderer/Model/Model.hpp"
 
 //std
 #include <memory>
 #include <vector>
 
-namespace Engine{
+namespace Renderer{
     class FirstApp
     {
         public:

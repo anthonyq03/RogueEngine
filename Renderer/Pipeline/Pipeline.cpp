@@ -7,7 +7,7 @@
 #include <iostream>
 #include <cassert>
 
-namespace Engine
+namespace Renderer
 {
     Pipeline::Pipeline(EngineDevice& device, const std::string& vertFilePath, const std::string& fragFilePath, const PipelineConfigInfo& configInfo): engineDevice{device}
     {

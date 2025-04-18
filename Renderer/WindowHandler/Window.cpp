@@ -1,7 +1,7 @@
 #include "window.hpp"
 #include <stdexcept>
 
-namespace Engine
+namespace Renderer
 {
     Window::Window(int width, int height, const std::string title) : width(width), height(height), title(title)
     {

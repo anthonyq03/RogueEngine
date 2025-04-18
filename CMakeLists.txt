@@ -25,12 +25,12 @@ add_custom_target(
 
 add_executable(VulkanApp
 main.cpp
-Engine/WindowHandler/Window.cpp
-Engine/Pipeline/Pipeline.cpp
+Renderer/WindowHandler/Window.cpp
+Renderer/Pipeline/Pipeline.cpp
 first_app.cpp
-Engine/EngineDevice/EngineDevice.cpp
-Engine/SwapChain/SwapChain.cpp
-Engine/Model/Model.cpp
+Renderer/EngineDevice/EngineDevice.cpp
+Renderer/SwapChain/SwapChain.cpp
+Renderer/Model/Model.cpp
 )
 
 add_dependencies(VulkanApp RunCompileScript)

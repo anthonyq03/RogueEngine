@@ -7,7 +7,7 @@
 
 int main()
 {
-    Engine::FirstApp app{};
+    Renderer::FirstApp app{};
 
     try{
         app.run();

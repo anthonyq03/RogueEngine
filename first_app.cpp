@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <array>
 
-namespace Engine
+namespace Renderer
 {
 
     FirstApp::FirstApp()

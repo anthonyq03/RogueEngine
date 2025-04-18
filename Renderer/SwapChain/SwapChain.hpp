@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 
-namespace Engine {
+namespace Renderer {
 
     class SwapChain {
     public:

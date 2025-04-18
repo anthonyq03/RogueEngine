@@ -1,6 +1,6 @@
 #include "Model.hpp"
 
-namespace Engine
+namespace Renderer
 {
     Model::Model(EngineDevice &device, const std::vector<Vertex>& vertices): device{device}
     {
