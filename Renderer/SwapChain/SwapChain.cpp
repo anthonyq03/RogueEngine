@@ -13,6 +13,16 @@ namespace Renderer {
 
     SwapChain::SwapChain(EngineDevice &deviceRef, VkExtent2D extent)
         : device{deviceRef}, windowExtent{extent} {
+            init();
+    }
+
+    SwapChain::SwapChain(EngineDevice &deviceRef, VkExtent2D extent, std::shared_ptr<SwapChain> previous)
+    : device{deviceRef}, windowExtent{extent}, oldSwapChain{previous} {
+        init();
+        oldSwapChain = nullptr; // old swap chain is no longer needed
+    }
+
+    void SwapChain::init(){
         createSwapChain();
         createImageViews();
         createRenderPass();
@@ -162,7 +172,7 @@ namespace Renderer {
         createInfo.presentMode = presentMode;
         createInfo.clipped = VK_TRUE;
 
-        createInfo.oldSwapchain = VK_NULL_HANDLE;
+        createInfo.oldSwapchain = oldSwapChain != nullptr ? oldSwapChain->swapChain : VK_NULL_HANDLE;
 
         if (vkCreateSwapchainKHR(device.device(), &createInfo, nullptr, &swapChain) != VK_SUCCESS) {
             throw std::runtime_error("failed to create swap chain!");
